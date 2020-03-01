@@ -1,5 +1,5 @@
-const fs = require('fs');
-const readline = require('readline');
+const _ = require('lodash');
+const fileReader = require('../utils/fileReader');
 
 function calculateRequiredFuel(weight) {
   const fuel = Math.floor(weight / 3) - 2;
@@ -10,22 +10,21 @@ function calculateRequiredFuel(weight) {
 }
 
 function main() {
-  const readInterface = readline.createInterface({
-    input: fs.createReadStream('./src/day01/day-01.txt'),
-    output: process.stdout,
-    console: false,
+  const fileName = './src/day01/day-01.txt';
+  const lineHandler = line => {
+    return parseInt(line, 10);
+  };
+
+  fileReader(fileName, lineHandler).then(lines => {
+    const totalWeight = _.reduce(
+      lines,
+      (acc, weight) => {
+        return acc + calculateRequiredFuel(weight);
+      },
+      0,
+    );
+    console.log(totalWeight);
   });
-  let totalRequiredFuel = 0;
-  readInterface
-    .on('line', line => {
-      const moduleWeight = parseInt(line, 10);
-      const requiredFuel = calculateRequiredFuel(moduleWeight);
-      totalRequiredFuel += requiredFuel;
-      console.log(moduleWeight, requiredFuel);
-    })
-    .on('close', () => {
-      console.log(totalRequiredFuel);
-    });
 }
 
 main();

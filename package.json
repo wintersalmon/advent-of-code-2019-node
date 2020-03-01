@@ -13,5 +13,8 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
