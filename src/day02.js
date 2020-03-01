@@ -1,5 +1,4 @@
-const fs = require('fs');
-const readline = require('readline');
+const fileReader = require('./utils/fileReader');
 
 const DEBUG = false;
 
@@ -44,32 +43,28 @@ function runIntcodeSimulator(instructionsSrc, noun = 0, verb = 0) {
   return instructions[0];
 }
 
+// 7960
 function main() {
-  const readInterface = readline.createInterface({
-    input: fs.createReadStream('./src/day02/day-02.txt'),
-    output: process.stdout,
-    console: false,
-  });
+  const fileName = './src/resources/inputs/day02.txt';
+  const lineHandler = line => {
+    return line.split(',').map(n => parseInt(n, 10));
+  };
 
-  let instructions = null;
-  readInterface
-    .on('line', line => {
-      instructions = line.split(',').map(n => parseInt(n, 10));
-    })
-    .on('close', () => {
-      let answer = null;
-      for (let noun = 0; noun <= 99; noun += 1) {
-        for (let verb = 0; verb <= 99; verb += 1) {
-          const result = runIntcodeSimulator(instructions, noun, verb);
-          console.log(`${verb}, ${verb}: ${result}`);
-          if (result === 19690720) {
-            answer = 100 * noun + verb;
-          }
+  fileReader(fileName, lineHandler).then(lines => {
+    const instructions = lines[0];
+    let answer = null;
+    for (let noun = 0; noun <= 99; noun += 1) {
+      for (let verb = 0; verb <= 99; verb += 1) {
+        const result = runIntcodeSimulator(instructions, noun, verb);
+        console.log(`${verb}, ${verb}: ${result}`);
+        if (result === 19690720) {
+          answer = 100 * noun + verb;
         }
       }
+    }
 
-      console.log(answer);
-    });
+    console.log(answer);
+  });
 }
 
 main();

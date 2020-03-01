@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const fileReader = require('../utils/fileReader');
+const fileReader = require('./utils/fileReader');
 
 function calculateRequiredFuel(weight) {
   const fuel = Math.floor(weight / 3) - 2;
@@ -10,7 +10,7 @@ function calculateRequiredFuel(weight) {
 }
 
 function main() {
-  const fileName = './src/day01/day-01.txt';
+  const fileName = './src/resources/inputs/day01.txt';
   const lineHandler = line => {
     return parseInt(line, 10);
   };
