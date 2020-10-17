@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "ts-node-dev ./src/index.ts --respawn src --ignore-watch node_modules"
+
   },
   "author": "Hungjoon Kim",
   "license": "ISC",

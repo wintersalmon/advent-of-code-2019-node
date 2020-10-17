@@ -44,7 +44,7 @@ function runIntcodeSimulator(instructionsSrc, noun = 0, verb = 0) {
 }
 
 // 7960
-function main() {
+export default function main() {
   const fileName = './src/resources/inputs/day02.txt';
   const lineHandler = line => {
     return line.split(',').map(n => parseInt(n, 10));

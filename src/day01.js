@@ -9,7 +9,7 @@ function calculateRequiredFuel(weight) {
   return 0;
 }
 
-function main() {
+export default function main() {
   const fileName = './src/resources/inputs/day01.txt';
   const lineHandler = line => {
     return parseInt(line, 10);
