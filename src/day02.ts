@@ -4,11 +4,11 @@ import { fileReader } from './utils/fileReader';
 const DEBUG = false;
 
 function debug(
-  instructions: any,
-  command: any,
-  srcA: any,
-  srcB: any,
-  dst: any,
+  instructions: number[],
+  command: number,
+  srcA: number,
+  srcB: number,
+  dst: number,
 ) {
   if (!DEBUG) {
     return;
@@ -23,7 +23,7 @@ function debug(
   console.log();
 }
 
-function runIntcodeSimulator(instructionsSrc: any, noun = 0, verb = 0) {
+function runIntcodeSimulator(instructionsSrc: number[], noun = 0, verb = 0) {
   const instructions = [...instructionsSrc];
 
   instructions[1] = noun;
@@ -49,6 +49,7 @@ function runIntcodeSimulator(instructionsSrc: any, noun = 0, verb = 0) {
       debug(instructions, command, srcA, srcB, dst);
     } else {
       console.log('undefined\n');
+      break;
     }
 
     currPosition += 4;
@@ -73,7 +74,7 @@ export default function main(): void {
       for (let verb = 0; verb <= 99; verb += 1) {
         const result = runIntcodeSimulator(instructions, noun, verb);
 
-        console.log(`${verb}, ${verb}: ${result}`);
+        // console.log(`${verb}, ${verb}: ${result}`);
 
         if (result === 19690720) {
           answer = 100 * noun + verb;
