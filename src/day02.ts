@@ -1,23 +1,36 @@
-const fileReader = require('./utils/fileReader');
+/* eslint-disable no-console */
+import { fileReader } from './utils/fileReader';
 
 const DEBUG = false;
 
-function debug(instructions, command, srcA, srcB, dst) {
+function debug(
+  instructions: any,
+  command: any,
+  srcA: any,
+  srcB: any,
+  dst: any,
+) {
   if (!DEBUG) {
     return;
   }
+
   const op = command === 1 ? '+' : '*';
+
   console.log(`${op} (${srcA} ${srcB}) ${dst}`);
-  // console.log(`  (${instructions[srcA]} ${instructions[srcB]}) ${instructions[dst]}`);
+  console.log(
+    `  (${instructions[srcA]} ${instructions[srcB]}) ${instructions[dst]}`,
+  );
   console.log();
 }
 
-function runIntcodeSimulator(instructionsSrc, noun = 0, verb = 0) {
+function runIntcodeSimulator(instructionsSrc: any, noun = 0, verb = 0) {
   const instructions = [...instructionsSrc];
+
   instructions[1] = noun;
   instructions[2] = verb;
 
   let currPosition = 0;
+
   while (currPosition >= 0) {
     if (instructions[currPosition] === 99) {
       break;
@@ -37,6 +50,7 @@ function runIntcodeSimulator(instructionsSrc, noun = 0, verb = 0) {
     } else {
       console.log('undefined\n');
     }
+
     currPosition += 4;
   }
 
@@ -44,19 +58,23 @@ function runIntcodeSimulator(instructionsSrc, noun = 0, verb = 0) {
 }
 
 // 7960
-export default function main() {
+export default function main(): void {
   const fileName = './src/resources/inputs/day02.txt';
-  const lineHandler = line => {
-    return line.split(',').map(n => parseInt(n, 10));
+
+  const lineHandler = (line: string): number[] => {
+    return line.split(',').map((n) => parseInt(n, 10));
   };
 
-  fileReader(fileName, lineHandler).then(lines => {
+  fileReader<number[]>(fileName, lineHandler).then((lines) => {
     const instructions = lines[0];
     let answer = null;
+
     for (let noun = 0; noun <= 99; noun += 1) {
       for (let verb = 0; verb <= 99; verb += 1) {
         const result = runIntcodeSimulator(instructions, noun, verb);
+
         console.log(`${verb}, ${verb}: ${result}`);
+
         if (result === 19690720) {
           answer = 100 * noun + verb;
         }

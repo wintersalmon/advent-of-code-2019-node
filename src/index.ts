@@ -1,3 +1,3 @@
-import main from './day02.js';
+import main from './day02';
 
 main();
